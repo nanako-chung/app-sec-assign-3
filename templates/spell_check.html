@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<title>Check Your Spelling</title>
+	</head>
+	<body>
+		<h1>Check Your Spelling</h1>
+		<form method='post' autocomplete='off'>
+			<input type='text' name='inputtext' placeholder='Enter text' id='inputtext' required>
+			<input type='submit' value='Check'>
+			<input type='hidden' name='csrf_token' value='{{ csrf_token() }}'/>
+		</form>
+		<div id='textout'>{{ output }}</div>
+		<div id='misspelled'>{{ msg }}</div>
+	</body>
+</html>

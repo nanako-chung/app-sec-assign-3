@@ -1,0 +1,6 @@
+action: py36, msg: envreport
+cwd: /Users/nanakochung/Desktop/School/Senior Year/App Sec/assign-2
+cmd: '/Users/nanakochung/Desktop/School/Senior Year/App Sec/assign-2/.tox/py36/bin/python' -m pip freeze
+You are using pip version 10.0.1, however version 19.3.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+my-tox-tested-package==0.0.1

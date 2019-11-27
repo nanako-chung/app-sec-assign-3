@@ -1,0 +1,7 @@
+action: py27, msg: getenv
+cwd: /Users/nanakochung/Desktop/School/Senior Year/App Sec/assign-2
+cmd: '/Users/nanakochung/Desktop/School/Senior Year/App Sec/assign-2/.tox/py27/bin/python' -m pip install -rrequirements.txt
+my-tox-tested-package 0.0.1 requires Django>=1.11.0, which is not installed.
+my-tox-tested-package 0.0.1 requires djangorestframework>=3.6.0, which is not installed.
+You are using pip version 10.0.1, however version 19.3.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.

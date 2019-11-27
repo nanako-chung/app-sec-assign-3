@@ -1,0 +1,16 @@
+action: py27, msg: installpkg
+cwd: /Users/nanakochung/Desktop/School/Senior Year/App Sec/assign-2
+cmd: '/Users/nanakochung/Desktop/School/Senior Year/App Sec/assign-2/.tox/py27/bin/python' -m pip install --no-deps -U .tox/.tmp/package/1/my-tox-tested-package-0.0.1.zip
+Processing ./.tox/.tmp/package/1/my-tox-tested-package-0.0.1.zip
+Building wheels for collected packages: my-tox-tested-package
+  Running setup.py bdist_wheel for my-tox-tested-package: started
+  Running setup.py bdist_wheel for my-tox-tested-package: finished with status 'done'
+  Stored in directory: /Users/nanakochung/Library/Caches/pip/wheels/48/0c/ee/90bf1597a2b79e2ea53619051a853bfc8a83f0523d38ae9837
+Successfully built my-tox-tested-package
+Installing collected packages: my-tox-tested-package
+  Found existing installation: my-tox-tested-package 0.0.1
+    Not uninstalling my-tox-tested-package at /Users/nanakochung/Desktop/School/Senior Year/App Sec/assign-2, outside environment /Users/nanakochung/Desktop/School/Senior Year/App Sec/assign-2/.tox/py27/bin/..
+    Can't uninstall 'my-tox-tested-package'. No files were found to uninstall.
+Successfully installed my-tox-tested-package-0.0.1
+You are using pip version 10.0.1, however version 19.3.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.

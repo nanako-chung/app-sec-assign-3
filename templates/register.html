@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<title>Register</title>
+	</head>
+	<body>
+		<h1>Register</h1>
+		<a href="{{ url_for('login') }}">Login</a>
+		<a href="{{ url_for('register') }}">Register</a>
+		<form action="{{ url_for('register') }}" method='post' autocomplete='off'>
+			<input type='text' name='username' placeholder='Username' id='uname' required>
+			<input type='text' name='password' placeholder='Password' id='pword' required>
+			<input type='text' name='two_factor_auth' placeholder='Two Factor Auth' id='2fa' required>
+			<div class='msg' id='success'>{{ msg }}</div>
+			<input type='submit' value='Register'>
+			<input type='hidden' name='csrf_token' value='{{ csrf_token() }}'/>
+		</form>
+	</body>
+</html>
