@@ -1,0 +1,17 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<title>History</title>
+	</head>
+	<body>
+		<h1>History</h1>
+		<span class='numqueries' id='numqueries'>{{ numqueries }}</span> queries performed before:</br></br>
+		{%- for num, spell_check in spell_checks %}
+			<div>{{ num }}. <a id="query{{ num }}" href="{{ url_for('query', query_id=num) }}">{{ spell_check.submitted_text }}</a></div>
+		{%- endfor %}
+		<input type='hidden' name='csrf_token' value='{{ csrf_token() }}'/></br></br>
+		<a href="{{ url_for('logout') }}">Logout</a>
+	</body>
+</html>

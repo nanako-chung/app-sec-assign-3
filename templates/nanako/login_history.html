@@ -1,0 +1,16 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<title>Login History</title>
+	</head>
+	<body>
+		<h1>Login History</h1>
+		{%- for num, log in logs %}
+			<div>Session {{ num }} login time: <span id="login{{ num }}_time">{{ log.login_time }}</span></div>
+			<div>Session {{ num }} logout time: <span id="logout{{ num }}_time">{{ log.logout_time }}</span></div>
+		{%- endfor %}
+		<input type='hidden' name='csrf_token' value='{{ csrf_token() }}'/></br></br>
+	</body>
+</html>
