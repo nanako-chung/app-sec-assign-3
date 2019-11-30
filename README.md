@@ -1,4 +1,4 @@
-# Assign 3
+# Assign 3 [![Build Status](https://travis-ci.org/nanako-chung/app-sec-assign-1.svg?branch=master)](https://travis-ci.org/nanako-chung/app-sec-assign-1)
 
 ### Introduction
 This assignment focuses on secure database creation and management. For this assignment,
