@@ -1,4 +1,0 @@
-action: py36, msg: envreport
-cwd: /Users/nanakochung/Desktop/School/Senior Year/App Sec/assign-2
-cmd: '/Users/nanakochung/Desktop/School/Senior Year/App Sec/assign-2/.tox/py36/bin/python' -m pip freeze
-my-tox-tested-package==0.0.1

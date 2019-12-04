@@ -1,8 +1,0 @@
-action: py36, msg: getenv
-cwd: /Users/nanakochung/Desktop/School/Senior Year/App Sec/assign-2/.tox
-cmd: /usr/local/opt/python@2/bin/python2.7 -m virtualenv --no-download --python /Library/Frameworks/Python.framework/Versions/3.6/bin/python3.6 py36
-Using base prefix '/Library/Frameworks/Python.framework/Versions/3.6'
-New python executable in /Users/nanakochung/Desktop/School/Senior Year/App Sec/assign-2/.tox/py36/bin/python3.6
-Also creating executable in /Users/nanakochung/Desktop/School/Senior Year/App Sec/assign-2/.tox/py36/bin/python
-Installing setuptools, pip, wheel...done.
-Running virtualenv with interpreter /Library/Frameworks/Python.framework/Versions/3.6/bin/python3.6

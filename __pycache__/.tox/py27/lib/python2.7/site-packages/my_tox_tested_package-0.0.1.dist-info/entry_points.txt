@@ -1,3 +1,0 @@
-[pytest11]
-tox_tested_package = tox_tested_package.fixtures
-

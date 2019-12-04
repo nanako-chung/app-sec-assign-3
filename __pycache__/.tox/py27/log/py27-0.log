@@ -1,7 +1,0 @@
-action: py27, msg: getenv
-cwd: /Users/nanakochung/Desktop/School/Senior Year/App Sec/assign-2/.tox
-cmd: /usr/local/opt/python@2/bin/python2.7 -m virtualenv --no-download --python /usr/local/opt/python@2/bin/python2.7 py27
-Already using interpreter /usr/local/opt/python@2/bin/python2.7
-New python executable in /Users/nanakochung/Desktop/School/Senior Year/App Sec/assign-2/.tox/py27/bin/python2.7
-Also creating executable in /Users/nanakochung/Desktop/School/Senior Year/App Sec/assign-2/.tox/py27/bin/python
-Installing setuptools, pip, wheel...done.
