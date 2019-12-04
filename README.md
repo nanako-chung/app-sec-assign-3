@@ -1,6 +1,9 @@
-# Assign 3 [![Build Status](https://travis-ci.org/nanako-chung/app-sec-assign-1.svg?branch=master)](https://travis-ci.org/nanako-chung/app-sec-assign-1)
+# Assign 3 
 
 ### Introduction
+
+Git link: https://github.com/nanako-chung/app-sec-assign-3
+
 This assignment focuses on secure database creation and management. For this assignment,
 you are tasked with building a database back-end to the Web service you created in
 Assignment 2, as well as adding some features to the Web service that the database enables.
@@ -115,3 +118,12 @@ that your code is not vulnerable to SQLi attacks and that you are performing pro
 control. SQLi attacks can be checked using SQLMap, and by and by attempting some SQLi
 attacks by hand. Information on downloading and using SQLMap can be found at
 https://sqlmap.org/.
+
+### Tests using SQLMap
+![Test of Login](login-test.png)
+![Test of Login Table](login-table-test.png)
+![Test of Register](register-test.png)
+![Test of Register Table](register-table-test.png)
+![Test of SpellCheck](spell_check-test.png)
+![Test of SpellCheck Table](spell_check-table-test.png)
+
