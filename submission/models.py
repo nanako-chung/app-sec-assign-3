@@ -28,7 +28,7 @@ class SpellCheck(Base):
  
 class Log(Base):
 	__tablename__ = 'logs'
-	login_history_id = Column(Integer, primary_key=True)
+	log_history_id = Column(Integer, primary_key=True)
 	account_username = Column(String, ForeignKey('accounts.username'), nullable=False)
 	account = relationship("Account", foreign_keys=[account_username])
 	login_time = Column(String, nullable=True)

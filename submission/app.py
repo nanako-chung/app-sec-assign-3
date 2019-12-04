@@ -58,6 +58,7 @@ def create_app():
 					# Create session data, we can access this data in other routes
 					session['username'] = username
 					session['login_time'] = time.time()
+					session['user_to_search'] = username
 					login_user(User(username))
 					new_login = Log(session['username'], session['login_time'], 'N/A')
 					db_session.add(new_login)
@@ -102,51 +103,6 @@ def create_app():
 				new_account = Account(username, hashedPassword, two_factor_auth)
 				db_session.add(new_account)
 				db_session.commit()
-
-				user_path = './templates/' + username
-				try:
-					os.makedirs(user_path)
-					f = open(user_path + '/history.html', 'w')
-					f.write("""
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset='utf-8'>
-		<title>History</title>
-	</head>
-	<body>
-		<h1>History</h1>
-		<span class='numqueries' id='numqueries'>{{ numqueries }}</span> queries performed before:</br></br>
-		{%- for num, spell_check in spell_checks %}
-			<div>{{ num }}. <a id="query{{ num }}" href="{{ url_for('query', query_id=num) }}">{{ spell_check.submitted_text }}</a></div>
-		{%- endfor %}
-		<input type='hidden' name='csrf_token' value='{{ csrf_token() }}'/></br></br>
-		<a href="{{ url_for('logout') }}">Logout</a>
-	</body>
-</html>""")
-					f.close()
-					f = open(user_path + '/login_history.html', 'w')
-					f.write("""
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset='utf-8'>
-		<title>Login History</title>
-	</head>
-	<body>
-		<h1>Login History</h1>
-		{%- for num, log in logs %}
-			<div>Session {{ num }} login time: <span id="login{{ num }}_time">{{ log.login_time }}</span></div>
-			<div>Session {{ num }} logout time: <span id="logout{{ num }}_time">{{ log.logout_time }}</span></div>
-		{%- endfor %}
-		<input type='hidden' name='csrf_token' value='{{ csrf_token() }}'/></br></br>
-	</body>
-</html>""")
-					f.close()
-				except OSError as exc: # Guard against race condition
-					if exc.errno != errno.EEXIST:
-						raise
-
 				msg = 'Success!'
 		elif request.method == 'POST':
 			# Form is empty... (no POST data)
@@ -177,27 +133,7 @@ def create_app():
 			spell_check = SpellCheck(session['username'], inputtext, msg)
 			db_session.add(spell_check)
 			db_session.commit()
-
-			user_path = './templates/' + session['username']
-			query_num = str(SpellCheck.query.filter(SpellCheck.account_username == session['username']).count())
-			f = open(user_path + '/query' + query_num + '.html', 'w')
-			f.write("""
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset='utf-8'>
-		<title>Query {}</title>
-	</head>
-	<body>
-		<h1>Query {}</h1>
-		<div>Query number: <span id="queryid">{}</span></div>
-		<div>Username: <span id="username">{}</span></div>
-		<div>Query text: <span id="querytext">{}</span></div>
-		<div>Query results: <span id="queryresults">{}</span></div>
-	</body>
-</html>""".format(query_num, query_num, query_num, session['username'], inputtext, msg))
-			f.close()
-
+			
 		# User is loggedin show them the spell_check page
 		return render_template('spell_check.html', msg=msg, output=inputtext)
 
@@ -208,26 +144,30 @@ def create_app():
 		if 'username' not in session:
 			# User is not loggedin redirect to login page
 			return redirect(url_for('login'))
-
-		# if session['username'] == 'admin':
-		# 	if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'two_factor_auth' in request.form:
-		# 		# Create variables for easy access
-		# 		username = request.form['username']
+			
+		if session['username'] == 'admin' and request.method == 'POST' and 'userquery' in request.form:
+			session['user_to_search'] = request.form['userquery']
 
 		# User is loggedin show them the home page
-		return render_template('/' + session['username'] + '/history.html', numqueries=SpellCheck.query.filter(SpellCheck.account_username == session['username']).count(), spell_checks=list(enumerate(SpellCheck.query.filter(SpellCheck.account_username == session['username']).all(), 1)))
+		try:
+			return render_template('history.html', numqueries=SpellCheck.query.filter(SpellCheck.account_username == session['user_to_search']).count(), spell_checks=list(SpellCheck.query.filter(SpellCheck.account_username == session['user_to_search']).all()))
+		except:
+			session['user_to_search'] = session['username']
+			return render_template('history.html', numqueries=SpellCheck.query.filter(SpellCheck.account_username == session['username']).count(), spell_checks=list(SpellCheck.query.filter(SpellCheck.account_username == session['username']).all()))
 
 	# http://localhost:5000/history/query# - this will give the user info about a specific query
-	@app.route('/history/query<int:query_id>', methods=['GET', 'POST'])
+	@app.route('/history/query<int:query_id>', methods=['GET'])
 	def query(query_id):
 		# Check if user is loggedin
 		if 'username' not in session:
-
 			# User is not loggedin redirect to login page
 			return redirect(url_for('login'))
 
-		# User is loggedin show them the home page
-		return render_template(session['username'] + '/query' + str(query_id) + '.html')
+		spell_check = SpellCheck.query.filter(SpellCheck.spell_check_id == query_id).first()
+		if spell_check is not None and (session['username'] == 'admin' or spell_check.account_username == session['username']):
+			return render_template('query.html', queryid=query_id, username=spell_check.account_username, querytext=spell_check.submitted_text, queryresult=spell_check.result)
+		else:
+			return render_template('history.html', numqueries=SpellCheck.query.filter(SpellCheck.account_username == session['username']).count(), spell_checks=list(SpellCheck.query.filter(SpellCheck.account_username == session['username']).all()))
 
 	# http://localhost:5000/login_history - this will be the history of all queries run
 	@app.route('/login_history', methods=['GET', 'POST'])
@@ -237,9 +177,16 @@ def create_app():
 			# User is not loggedin redirect to login page
 			return redirect(url_for('login'))
 
-		# User is loggedin show them the home page
-		return render_template('/' + session['username'] + '/login_history.html', logs=list(enumerate(Log.query.filter(Log.account_username == session['username']).all(), 1)))
-	
+		if session['username'] == 'admin' and request.method == 'POST' and 'userid' in request.form:
+			session['user_to_search'] = request.form['userid']
+
+		try:
+			# User is loggedin show them the home page
+			return render_template('login_history.html', logs=list(Log.query.filter(Log.account_username == session['user_to_search']).all()))
+		except:
+			session['user_to_search'] = session['username']
+			return render_template('login_history.html', logs=list(Log.query.filter(Log.account_username == session['username']).all()))
+
 	# http://localhost:5000/logout - this will be the logout page, we need to use both GET and POST requests
 	@app.route('/logout')
 	def logout():
@@ -247,10 +194,11 @@ def create_app():
 		log.logout_time = time.time()
 		db_session.add(log)
 		db_session.commit()
-		
+
 		# remove the username from the session if it is there
 		session.pop('username', None)
 		session.pop('login_time', None)
+		session.pop('user_to_search', None)
 		return redirect(url_for('login'))
 
 	return app

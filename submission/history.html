@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<title>History</title>
+	</head>
+	<body>
+		<h1>History</h1>
+		<span class='numqueries' id='numqueries'>{{ numqueries }}</span> queries performed before:</br></br>
+		{%- for spell_check in spell_checks %}
+			<div>{{ spell_check.spell_check_id }}. <a id="query{{ spell_check.spell_check_id }}" href="{{ url_for('query', query_id=spell_check.spell_check_id) }}">{{ spell_check.submitted_text }}</a></div>
+		{%- endfor %}
+		<input type='hidden' name='csrf_token' value='{{ csrf_token() }}'/></br></br>
+
+		<p>ONLY FOR ADMIN: which user do you want to see history for?</p>
+		<form action="{{ url_for('history') }}" method='post' autocomplete='off' id='userquery'>
+			<input type='text' name='userquery' required>
+			<input type='submit' value='Submit'>
+			<input type='hidden' name='csrf_token' value='{{ csrf_token() }}'/>
+		</form>
+
+		<a href="{{ url_for('logout') }}">Logout</a>
+	</body>
+</html>
