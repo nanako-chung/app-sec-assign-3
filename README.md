@@ -119,11 +119,17 @@ control. SQLi attacks can be checked using SQLMap, and by and by attempting some
 attacks by hand. Information on downloading and using SQLMap can be found at
 https://sqlmap.org/.
 
-### Tests using SQLMap
+### Tests
+To run tests for functionality (it is best to run the following command line input after using the application i.e. registering a user, logging in, using spell_check):
+
+```
+python3 analysis-script.py
+```
+
+#### Tests using SQLMap
 ![Test of Login](login-test.png)
 ![Test of Login Table](login-table-test.png)
 ![Test of Register](register-test.png)
 ![Test of Register Table](register-table-test.png)
 ![Test of SpellCheck](spell_check-test.png)
 ![Test of SpellCheck Table](spell_check-table-test.png)
-
